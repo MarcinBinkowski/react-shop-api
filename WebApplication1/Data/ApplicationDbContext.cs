@@ -14,6 +14,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Employee> Employees { get; set; }
+    
+    public DbSet<Payment> Payments { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

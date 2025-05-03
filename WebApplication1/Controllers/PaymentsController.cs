@@ -42,14 +42,19 @@ public class PaymentsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdatePayment(int id, Payment payment)
+    public async Task<IActionResult> UpdatePayment(int id, Payment updateDto)
     {
-        if (id != payment.Id)
+        var payment = await _context.Payments.FindAsync(id);
+        if (payment == null)
         {
-            return BadRequest();
+            return NotFound();
         }
 
-        _context.Entry(payment).State = EntityState.Modified;
+        payment.PaymentMethod = updateDto.PaymentMethod;
+        payment.Amount = updateDto.Amount;
+        payment.PaymentDate = updateDto.PaymentDate;
+        payment.Notes = updateDto.Notes;
+        payment.OrderId = updateDto.OrderId;
 
         try
         {
@@ -57,14 +62,14 @@ public class PaymentsController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!await _context.Set<Payment>().AnyAsync(e => e.Id == id))
+            if (!await _context.Payments.AnyAsync(e => e.Id == id))
             {
                 return NotFound();
             }
             throw;
         }
 
-        return NoContent();
+        return Ok(payment);
     }
 
     [HttpDelete("{id}")]

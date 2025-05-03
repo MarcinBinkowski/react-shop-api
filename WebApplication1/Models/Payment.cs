@@ -18,9 +18,6 @@ public class Payment
     [Required]
     public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
 
-    [StringLength(200)]
-    public string? TransactionId { get; set; }
-
     [StringLength(500)]
     public string? Notes { get; set; }
 
