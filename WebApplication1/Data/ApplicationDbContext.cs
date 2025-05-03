@@ -9,16 +9,17 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    public DbSet<User> Users { get; set; }
+    public DbSet<Employee> Users { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<Employee> Employees { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>(entity =>
+        modelBuilder.Entity<Employee>(entity =>
         {
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Name).IsRequired();

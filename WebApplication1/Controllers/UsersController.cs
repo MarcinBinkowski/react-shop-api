@@ -17,7 +17,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+    public async Task<ActionResult<IEnumerable<Employee>>> GetUsers()
     {
         var users = await _context.Users.ToListAsync();
         return Ok(users);
@@ -66,11 +66,11 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
     [HttpPost]
-    public async Task<ActionResult<User>> CreateUser(User user)
+    public async Task<ActionResult<Employee>> CreateUser(Employee employee)
     {
-        _context.Users.Add(user);
+        _context.Users.Add(employee);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetUsers), new { id = user.Id }, user);
+        return CreatedAtAction(nameof(GetUsers), new { id = employee.Id }, employee);
     }
 }
