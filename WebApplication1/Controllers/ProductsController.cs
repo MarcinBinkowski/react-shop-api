@@ -42,14 +42,19 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProduct(int id, Product product)
+    public async Task<IActionResult> UpdateProduct(int id, Product updateDto)
     {
-        if (id != product.Id)
+        var product = await _context.Products.FindAsync(id);
+        if (product == null)
         {
-            return BadRequest();
+            return NotFound();
         }
 
-        _context.Entry(product).State = EntityState.Modified;
+        product.Name = updateDto.Name;
+        product.Category = updateDto.Category;
+        product.Price = updateDto.Price;
+        product.Stock = updateDto.Stock;
+        product.Status = updateDto.Status;
 
         try
         {
@@ -64,9 +69,8 @@ public class ProductsController : ControllerBase
             throw;
         }
 
-        return NoContent();
+        return Ok(product);
     }
-
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProduct(int id)
     {
