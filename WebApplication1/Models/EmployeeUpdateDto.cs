@@ -1,6 +1,6 @@
 namespace WebApplication1.Models;
 
-public class UserUpdateDto
+public class EmployeeUpdateDto
 {
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
