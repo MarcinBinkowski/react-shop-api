@@ -7,11 +7,11 @@ namespace WebApplication1.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class EmployeeController : ControllerBase
+public class EmployeesController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
 
-    public EmployeeController(ApplicationDbContext context)
+    public EmployeesController(ApplicationDbContext context)
     {
         _context = context;
     }
