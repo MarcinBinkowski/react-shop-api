@@ -86,4 +86,19 @@ public class PaymentsController : ControllerBase
 
         return NoContent();
     }
+    [HttpGet("user/{customerName}")]
+    public async Task<ActionResult<IEnumerable<Payment>>> GetPaymentsByCustomerName(string customerName)
+    {
+        var orders = await _context.Orders
+            .Where(o => o.CustomerName.Contains(customerName))
+            .Select(o => o.Id)
+            .ToListAsync();
+
+        var payments = await _context.Payments
+            .Where(p => orders.Contains(p.OrderId))
+            .OrderByDescending(p => p.PaymentDate)
+            .ToListAsync();
+
+        return Ok(payments);
+    }
 }

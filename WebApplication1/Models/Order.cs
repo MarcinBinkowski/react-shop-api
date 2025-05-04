@@ -35,4 +35,5 @@ public class Order
     public string ShippingAddress { get; set; } = string.Empty;
 
     public string? Notes { get; set; }
+
 }
