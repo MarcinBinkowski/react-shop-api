@@ -28,10 +28,6 @@ public class NotificationsController : ControllerBase
 
         var notifications = await query.ToListAsync();
 
-        if (notifications.Count == 0)
-        {
-            return NotFound();
-        }
 
         return Ok(notifications);
     }
@@ -113,5 +109,14 @@ public class NotificationsController : ControllerBase
         await _context.SaveChangesAsync();
     
         return Ok(notification);
+    }
+    [HttpGet("unread/{userId}")]
+    public async Task<ActionResult<IEnumerable<Notification>>> GetUnreadNotifications(int userId)
+    {
+        var unreadNotifications = await _context.Notifications
+            .Where(n => n.UserId == userId && !n.IsRead)
+            .ToListAsync();
+
+        return Ok(unreadNotifications);
     }
 }

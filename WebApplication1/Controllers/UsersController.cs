@@ -93,4 +93,32 @@ public class UsersController : ControllerBase
 
         return NoContent();
     }
+    [HttpPost("checkpassword")]
+    public async Task<IActionResult> CheckPassword([FromBody] LoginDto loginDto)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
+        if (user == null)
+        {
+            return NotFound(new { message = "User not found" });
+        }
+
+        if (user.Password == loginDto.Password)
+        {
+            return Ok(new 
+            { 
+                isValid = true, 
+                user = new 
+                {
+                    user.Id,
+                    user.Name,
+                    user.Email,
+                    user.IsAdmin
+                }
+            });
+        }
+        else
+        {
+            return Unauthorized(new { isValid = false });
+        }
+    }
 }
