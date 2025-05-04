@@ -27,4 +27,6 @@ public class Product
     [Required]
     [StringLength(20, MinimumLength = 2)]
     public string Status { get; set; } = string.Empty;
+    
+    public string? ImageBase64 { get; set; }
 }

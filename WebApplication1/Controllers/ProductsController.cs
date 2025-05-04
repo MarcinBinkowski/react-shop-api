@@ -55,6 +55,7 @@ public class ProductsController : ControllerBase
         product.Price = updateDto.Price;
         product.Stock = updateDto.Stock;
         product.Status = updateDto.Status;
+        product.ImageBase64 = updateDto.ImageBase64;
 
         try
         {

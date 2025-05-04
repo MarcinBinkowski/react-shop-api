@@ -112,7 +112,8 @@ public class UsersController : ControllerBase
                     user.Id,
                     user.Name,
                     user.Email,
-                    user.IsAdmin
+                    user.IsAdmin,
+                    user.Address
                 }
             });
         }

@@ -94,4 +94,23 @@ public class OrdersController : ControllerBase
 
         return NoContent();
     }
+    
+    [HttpGet("{userId}/orders")]
+    public async Task<ActionResult<IEnumerable<Order>>> GetUserOrders(int userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null)
+        {
+            return NotFound(new { message = "User not found" });
+        }
+
+        var orders = await _context.Orders
+            .Where(o => o.UserId == userId)
+            .Include(o => o.OrderItems)
+            .ThenInclude(oi => oi.Product)
+            .OrderByDescending(o => o.OrderDate)
+            .ToListAsync();
+
+        return Ok(orders);
+    }
 }
