@@ -56,19 +56,8 @@ public class PaymentsController : ControllerBase
         payment.Notes = updateDto.Notes;
         payment.OrderId = updateDto.OrderId;
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _context.Payments.AnyAsync(e => e.Id == id))
-            {
-                return NotFound();
-            }
-            throw;
-        }
 
+        await _context.SaveChangesAsync();
         return Ok(payment);
     }
 

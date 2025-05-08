@@ -63,19 +63,7 @@ public class UsersController : ControllerBase
         user.JoinedDate = updateDto.JoinedDate;
         user.IsAdmin = updateDto.IsAdmin;
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _context.Users.AnyAsync(e => e.Id == id))
-            {
-                return NotFound();
-            }
-            throw;
-        }
-
+        await _context.SaveChangesAsync();
         return Ok(user);
     }
 

@@ -64,19 +64,7 @@ public class OrdersController : ControllerBase
         order.ShippingAddress = updateDto.ShippingAddress;
         order.Notes = updateDto.Notes;
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _context.Orders.AnyAsync(e => e.Id == id))
-            {
-                return NotFound();
-            }
-            throw;
-        }
-
+        await _context.SaveChangesAsync();
         return Ok(order);
     }
 

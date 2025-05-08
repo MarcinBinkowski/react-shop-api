@@ -84,19 +84,7 @@ public class RatingsController : ControllerBase
         existingRating.Value = rating.Value;
         existingRating.Comment = rating.Comment;
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _context.Ratings.AnyAsync(r => r.Id == id))
-            {
-                return NotFound();
-            }
-            throw;
-        }
-
+        await _context.SaveChangesAsync();
         return NoContent();
     }
 

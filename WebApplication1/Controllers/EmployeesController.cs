@@ -50,19 +50,7 @@ public class EmployeesController : ControllerBase
         employee.Role = updateDto.Role;
         employee.Department = updateDto.Department;
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _context.Employees.AnyAsync(e => e.Id == id))
-            {
-                return NotFound();
-            }
-            throw;
-        }
-
+        await _context.SaveChangesAsync();
         return Ok(employee);
     }
     [HttpPost]

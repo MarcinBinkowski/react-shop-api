@@ -62,20 +62,8 @@ public class InvoicesController : ControllerBase
         invoice.DueDate = updateDto.DueDate;
         invoice.Amount = updateDto.Amount;
         invoice.Notes = updateDto.Notes;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _context.Invoices.AnyAsync(e => e.Id == id))
-            {
-                return NotFound();
-            }
-            throw;
-        }
-
+        
+        await _context.SaveChangesAsync();
         return Ok(invoice);
     }
     

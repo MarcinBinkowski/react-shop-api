@@ -65,19 +65,7 @@ public class NotificationsController : ControllerBase
         notification.IsRead = updateDto.IsRead;
         notification.UserId = updateDto.UserId;
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _context.Notifications.AnyAsync(e => e.Id == id))
-            {
-                return NotFound();
-            }
-            throw;
-        }
-
+        await _context.SaveChangesAsync();
         return Ok(notification);
     }
 

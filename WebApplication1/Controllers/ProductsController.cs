@@ -57,19 +57,7 @@ public class ProductsController : ControllerBase
         product.Status = updateDto.Status;
         product.ImageBase64 = updateDto.ImageBase64;
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _context.Products.AnyAsync(e => e.Id == id))
-            {
-                return NotFound();
-            }
-            throw;
-        }
-
+        await _context.SaveChangesAsync();
         return Ok(product);
     }
     [HttpDelete("{id}")]
